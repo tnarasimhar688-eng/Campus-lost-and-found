@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | CampusFind</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <a href="/" class="logo">
+        📦 Campus<span>Find</span>
+    </a>
+
+    <div class="nav-links">
+
+        <a href="/items">Find Items</a>
+
+        <a href="/report">Report Item</a>
+
+        <a href="/claims">Claims</a>
+
+        <a href="/logout" class="nav-btn">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<main class="dashboard">
+
+    <div class="dashboard-top">
+
+        <div>
+
+            <p class="mini-title">
+                STUDENT DASHBOARD
+            </p>
+
+            <h1>
+                Hello, {{ user["name"] }}! 👋
+            </h1>
+
+            <p>
+                Manage your lost & found activity.
+            </p>
+
+        </div>
+
+        <a href="/report"
+           class="primary-btn">
+
+            + Report Item
+
+        </a>
+
+    </div>
+
+
+    <div class="dashboard-stats">
+
+        <div class="dash-stat">
+            <span>📢</span>
+            <strong>{{ my_items|length }}</strong>
+            <p>My Reports</p>
+        </div>
+
+        <div class="dash-stat">
+            <span>🤝</span>
+            <strong>{{ my_claims|length }}</strong>
+            <p>My Claims</p>
+        </div>
+
+        <div class="dash-stat">
+            <span>🎓</span>
+            <strong>{{ user["student_id"] }}</strong>
+            <p>Student ID</p>
+        </div>
+
+    </div>
+
+
+    <div class="dashboard-layout">
+
+        <section class="panel">
+
+            <div class="panel-heading">
+
+                <h2>My Reports</h2>
+
+                <a href="/report">
+                    + Add
+                </a>
+
+            </div>
+
+
+            {% if my_items %}
+
+                {% for item in my_items %}
+
+                    <div class="item-row">
+
+                        <div class="item-icon">
+
+                            {% if item["category"] == "Electronics" %}
+                                📱
+                            {% elif item["category"] == "Documents" %}
+                                🪪
+                            {% elif item["category"] == "Bags" %}
+                                🎒
+                            {% elif item["category"] == "Keys" %}
+                                🔑
+                            {% else %}
+                                📦
+                            {% endif %}
+
+                        </div>
+
+                        <div class="item-info">
+
+                            <h3>
+                                {{ item["title"] }}
+                            </h3>
+
+                            <p>
+                                📍 {{ item["location"] }}
+                                · {{ item["item_date"] }}
+                            </p>
+
+                        </div>
+
+                        <span class="status
+                            {{ item['item_type']|lower }}">
+
+                            {{ item["item_type"] }}
+
+                        </span>
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="empty">
+
+                    <div>📦</div>
+
+                    <h3>No reports yet</h3>
+
+                    <p>
+                        Report your first lost or found item.
+                    </p>
+
+                    <a href="/report"
+                       class="primary-btn">
+
+                        Report Item
+
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <aside class="profile-panel">
+
+            <div class="profile-avatar">
+                {{ user["name"][0]|upper }}
+            </div>
+
+            <h2>
+                {{ user["name"] }}
+            </h2>
+
+            <p>
+                {{ user["student_id"] }}
+            </p>
+
+            <p>
+                📱 {{ user["phone"] }}
+            </p>
+
+            <hr>
+
+            <a href="/items" class="profile-link">
+                🔎 Search Items
+            </a>
+
+            <a href="/claims" class="profile-link">
+                🤝 View Claims
+            </a>
+
+            <a href="/report" class="profile-link">
+                📢 Report Item
+            </a>
+
+        </aside>
+
+    </div>
+
+</main>
+
+</body>
+</html>
