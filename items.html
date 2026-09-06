@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Find Items | CampusFind</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <a href="/" class="logo">
+        📦 Campus<span>Find</span>
+    </a>
+
+    <div class="nav-links">
+
+        <a href="/">Home</a>
+
+        {% if session.get("user_id") %}
+
+            <a href="/dashboard">Dashboard</a>
+
+            <a href="/report">Report Item</a>
+
+            <a href="/logout" class="nav-btn">
+                Logout
+            </a>
+
+        {% else %}
+
+            <a href="/login">Login</a>
+
+            <a href="/register" class="nav-btn">
+                Join Now
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</nav>
+
+
+<main class="items-page">
+
+    <div class="page-heading">
+
+        <p class="mini-title">
+            CAMPUS LISTINGS
+        </p>
+
+        <h1>
+            Find an Item 🔎
+        </h1>
+
+        <p>
+            Search through lost and found reports
+            from your campus.
+        </p>
+
+    </div>
+
+
+    <form class="search-box"
+          method="GET"
+          action="/items">
+
+        <input
+            type="text"
+            name="search"
+            value="{{ search }}"
+            placeholder="Search item, category or location..."
+        >
+
+
+        <select name="type">
+
+            <option value="">
+                All Items
+            </option>
+
+            <option value="Lost"
+                {% if selected_type == "Lost" %}
+                    selected
+                {% endif %}>
+                Lost
+            </option>
+
+            <option value="Found"
+                {% if selected_type == "Found" %}
+                    selected
+                {% endif %}>
+                Found
+            </option>
+
+        </select>
+
+
+        <button type="submit"
+                class="primary-btn">
+
+            Search 🔎
+
+        </button>
+
+    </form>
+
+
+    <div class="items-grid">
+
+        {% if items %}
+
+            {% for item in items %}
+
+                <div class="item-card">
+
+                    <div class="item-card-top">
+
+                        <div class="large-item-icon">
+
+                            {% if item["category"] == "Electronics" %}
+                                📱
+                            {% elif item["category"] == "Documents" %}
+                                🪪
+                            {% elif item["category"] == "Bags" %}
+                                🎒
+                            {% elif item["category"] == "Keys" %}
+                                🔑
+                            {% elif item["category"] == "Books" %}
+                                📚
+                            {% else %}
+                                📦
+                            {% endif %}
+
+                        </div>
+
+                        <span class="status
+                            {{ item['item_type']|lower }}">
+
+                            {{ item["item_type"] }}
+
+                        </span>
+
+                    </div>
+
+
+                    <h2>
+                        {{ item["title"] }}
+                    </h2>
+
+                    <p>
+                        {{ item["description"] or
+                           "No description provided." }}
+                    </p>
+
+
+                    <div class="item-details">
+
+                        <span>
+                            📍 {{ item["location"] }}
+                        </span>
+
+                        <span>
+                            📅 {{ item["item_date"] }}
+                        </span>
+
+                        <span>
+                            👤 {{ item["name"] }}
+                        </span>
+
+                    </div>
+
+
+                    {% if session.get("user_id")
+                          and item["user_id"] != session["user_id"]
+                          and item["status"] != "Claimed" %}
+
+                        <form method="POST"
+                              action="/claim/{{ item['id'] }}"
+                              class="claim-form">
+
+                            <textarea
+                                name="message"
+                                placeholder="Why do you think this is yours?"
+                                required
+                            ></textarea>
+
+                            <button
+                                type="submit"
+                                class="secondary-btn">
+
+                                🤝 Claim Item
+
+                            </button>
+
+                        </form>
+
+                    {% elif item["status"] == "Claimed" %}
+
+                        <div class="claimed">
+                            ✅ Item Claimed
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty wide">
+
+                <div>🔎</div>
+
+                <h2>
+                    No items found
+                </h2>
+
+                <p>
+                    Try another search or report a new item.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</main>
+
+</body>
+</html>
