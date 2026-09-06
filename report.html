@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Report Item | CampusFind</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <a href="/" class="logo">
+        📦 Campus<span>Find</span>
+    </a>
+
+    <div class="nav-links">
+
+        <a href="/dashboard">Dashboard</a>
+
+        <a href="/items">Find Items</a>
+
+        <a href="/logout" class="nav-btn">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="form-page">
+
+    <div class="form-card">
+
+        <p class="mini-title">
+            CAMPUS LOST & FOUND
+        </p>
+
+        <h1>
+            Report an Item 📢
+        </h1>
+
+        <p class="form-intro">
+            Tell students about an item you lost
+            or found on campus.
+        </p>
+
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% for category, message in messages %}
+
+                <div class="flash {{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endwith %}
+
+
+        <form method="POST">
+
+            <label>What happened?</label>
+
+            <div class="type-buttons">
+
+                <label class="type-option">
+
+                    <input
+                        type="radio"
+                        name="item_type"
+                        value="Lost"
+                        checked
+                    >
+
+                    <span>
+                        🔴 I Lost Something
+                    </span>
+
+                </label>
+
+
+                <label class="type-option">
+
+                    <input
+                        type="radio"
+                        name="item_type"
+                        value="Found"
+                    >
+
+                    <span>
+                        🟢 I Found Something
+                    </span>
+
+                </label>
+
+            </div>
+
+
+            <label>Item Name *</label>
+
+            <input
+                type="text"
+                name="title"
+                placeholder="Example: Black Backpack"
+                required
+            >
+
+
+            <label>Category *</label>
+
+            <select name="category" required>
+
+                <option value="">
+                    Select category
+                </option>
+
+                <option>Electronics</option>
+
+                <option>Documents</option>
+
+                <option>Bags</option>
+
+                <option>Books</option>
+
+                <option>Keys</option>
+
+                <option>Clothing</option>
+
+                <option>Accessories</option>
+
+                <option>Other</option>
+
+            </select>
+
+
+            <label>Description</label>
+
+            <textarea
+                name="description"
+                placeholder="Describe the item..."
+                rows="4"
+            ></textarea>
+
+
+            <label>Location *</label>
+
+            <input
+                type="text"
+                name="location"
+                placeholder="Example: Library Block A"
+                required
+            >
+
+
+            <label>Date *</label>
+
+            <input
+                type="date"
+                name="item_date"
+                required
+            >
+
+
+            <button type="submit"
+                    class="primary-btn full-btn">
+
+                Publish Report 🚀
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>
