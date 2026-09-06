@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Register | CampusFind</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body class="auth-body">
+
+<div class="auth-page">
+
+    <div class="auth-info">
+
+        <div class="big-icon">📦</div>
+
+        <h1>
+            Welcome to
+            <span>CampusFind</span>
+        </h1>
+
+        <p>
+            Join your campus community and help
+            lost items find their way home.
+        </p>
+
+        <div class="feature">
+            🔎 Find lost items
+        </div>
+
+        <div class="feature">
+            📢 Report lost or found items
+        </div>
+
+        <div class="feature">
+            🤝 Connect with students
+        </div>
+
+    </div>
+
+
+    <div class="auth-card">
+
+        <a href="/" class="back-link">
+            ← Home
+        </a>
+
+        <h2>Create Account</h2>
+
+        <p class="auth-subtitle">
+            Create your student account
+        </p>
+
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% for category, message in messages %}
+
+                <div class="flash {{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endwith %}
+
+
+        <form method="POST">
+
+            <label>Full Name</label>
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Enter your name"
+                required
+            >
+
+
+            <label>Student ID</label>
+
+            <input
+                type="text"
+                name="student_id"
+                placeholder="Example: CSE23001"
+                required
+            >
+
+
+            <label>Phone Number</label>
+
+            <input
+                type="tel"
+                name="phone"
+                placeholder="Enter phone number"
+                required
+            >
+
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Create password"
+                required
+            >
+
+
+            <button type="submit"
+                    class="primary-btn full-btn">
+
+                Create Account 🚀
+
+            </button>
+
+        </form>
+
+
+        <p class="auth-bottom">
+
+            Already have an account?
+
+            <a href="/login">
+                Login
+            </a>
+
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>
