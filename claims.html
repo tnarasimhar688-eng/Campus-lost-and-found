@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Claims | CampusFind</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <a href="/" class="logo">
+        📦 Campus<span>Find</span>
+    </a>
+
+    <div class="nav-links">
+
+        <a href="/dashboard">Dashboard</a>
+
+        <a href="/items">Find Items</a>
+
+        <a href="/report">Report Item</a>
+
+        <a href="/logout" class="nav-btn">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<main class="claims-page">
+
+    <div class="page-heading">
+
+        <p class="mini-title">
+            CLAIM MANAGEMENT
+        </p>
+
+        <h1>
+            Claim Requests 🤝
+        </h1>
+
+    </div>
+
+
+    <section class="panel">
+
+        <h2>
+            Requests on My Items
+        </h2>
+
+
+        {% if received %}
+
+            {% for claim in received %}
+
+                <div class="claim-row">
+
+                    <div>
+
+                        <h3>
+                            {{ claim["title"] }}
+                        </h3>
+
+                        <p>
+                            {{ claim["name"] }}
+                            ·
+                            {{ claim["student_id"] }}
+                        </p>
+
+                        <p>
+                            {{ claim["message"] }}
+                        </p>
+
+                    </div>
+
+
+                    <div class="claim-actions">
+
+                        {% if claim["status"] == "Pending" %}
+
+                            <a
+                                href="/claim/{{ claim['id'] }}/Approved"
+                                class="approve-btn"
+                            >
+                                ✓ Approve
+                            </a>
+
+                            <a
+                                href="/claim/{{ claim['id'] }}/Rejected"
+                                class="reject-btn"
+                            >
+                                ✕ Reject
+                            </a>
+
+                        {% else %}
+
+                            <span class="status-badge">
+                                {{ claim["status"] }}
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty">
+
+                <div>🤝</div>
+
+                <h3>
+                    No claim requests
+                </h3>
+
+                <p>
+                    Requests for your items will appear here.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <section class="panel">
+
+        <h2>
+            My Sent Claims
+        </h2>
+
+
+        {% if sent %}
+
+            {% for claim in sent %}
+
+                <div class="claim-row">
+
+                    <div>
+
+                        <h3>
+                            {{ claim["title"] }}
+                        </h3>
+
+                        <p>
+                            Owner:
+                            {{ claim["name"] }}
+                        </p>
+
+                        <p>
+                            {{ claim["message"] }}
+                        </p>
+
+                    </div>
+
+
+                    <span class="status-badge">
+                        {{ claim["status"] }}
+                    </span>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty">
+
+                <div>📭</div>
+
+                <h3>
+                    No claims sent
+                </h3>
+
+                <p>
+                    Your claim requests will appear here.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+</main>
+
+</body>
+</html>
