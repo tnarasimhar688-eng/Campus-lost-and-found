@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Campus Lost & Found</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <a href="/" class="logo">
+        📦 Campus<span>Find</span>
+    </a>
+
+    <div class="nav-links">
+
+        <a href="/">Home</a>
+
+        <a href="/items">Find Items</a>
+
+        {% if session.get("user_id") %}
+
+            <a href="/dashboard">Dashboard</a>
+
+            <a href="/logout" class="nav-btn">
+                Logout
+            </a>
+
+        {% else %}
+
+            <a href="/login">Login</a>
+
+            <a href="/register" class="nav-btn">
+                Join Now
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</nav>
+
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="badge">
+            🎓 Made for Campus Students
+        </div>
+
+        <h1>
+            Lost something?
+            <br>
+            <span>Let's find it.</span>
+        </h1>
+
+        <p>
+            A simple campus platform to report lost items,
+            share found items and reconnect them with their owners.
+        </p>
+
+        <div class="hero-buttons">
+
+            {% if session.get("user_id") %}
+
+                <a href="/report"
+                   class="primary-btn">
+                    Report an Item →
+                </a>
+
+            {% else %}
+
+                <a href="/register"
+                   class="primary-btn">
+                    Get Started →
+                </a>
+
+            {% endif %}
+
+            <a href="/items"
+               class="secondary-btn">
+                🔎 Browse Items
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-art">
+
+        <div class="floating-card card-one">
+            🎒
+            <strong>Backpack</strong>
+            <small>Found near Library</small>
+        </div>
+
+        <div class="campus-box">
+
+            <div class="sun">☀️</div>
+
+            <div class="building">
+
+                <div class="building-top">
+                    CAMPUS
+                </div>
+
+                <div class="windows">
+
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+
+                </div>
+
+                <div class="door">
+                    🚪
+                </div>
+
+            </div>
+
+            <div class="tree tree-one">🌳</div>
+            <div class="tree tree-two">🌳</div>
+
+        </div>
+
+        <div class="floating-card card-two">
+            🪪
+            <strong>ID Card</strong>
+            <small>Lost near Block A</small>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="stats">
+
+    <div>
+        <strong>{{ lost_count }}</strong>
+        <span>Lost Reports</span>
+    </div>
+
+    <div>
+        <strong>{{ found_count }}</strong>
+        <span>Found Reports</span>
+    </div>
+
+    <div>
+        <strong>24/7</strong>
+        <span>Campus Access</span>
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="section-heading">
+
+        <p class="mini-title">
+            HOW IT WORKS
+        </p>
+
+        <h2>
+            Find it. Report it. Return it. 💙
+        </h2>
+
+    </div>
+
+
+    <div class="steps">
+
+        <div class="step">
+
+            <div class="step-icon">📢</div>
+
+            <h3>Report</h3>
+
+            <p>
+                Tell the campus community about
+                your lost or found item.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-icon">🔎</div>
+
+            <h3>Search</h3>
+
+            <p>
+                Search items by name, category
+                or campus location.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-icon">🤝</div>
+
+            <h3>Reconnect</h3>
+
+            <p>
+                Send a claim request and help
+                return the item to its owner.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="cta">
+
+    <div>
+
+        <h2>
+            Ready to help someone find their item?
+        </h2>
+
+        <p>
+            Join CampusFind and make your campus
+            a little more helpful.
+        </p>
+
+    </div>
+
+    {% if session.get("user_id") %}
+
+        <a href="/report" class="primary-btn">
+            Report Item →
+        </a>
+
+    {% else %}
+
+        <a href="/register" class="primary-btn">
+            Join CampusFind →
+        </a>
+
+    {% endif %}
+
+</section>
+
+
+<footer>
+
+    <div class="logo">
+        📦 Campus<span>Find</span>
+    </div>
+
+    <p>
+        © 2026 CampusFind · Lost & Found for Students
+    </p>
+
+</footer>
+
+</body>
+</html>
